@@ -38,3 +38,10 @@ The core trade-off is half-open semantics. A 09:00–10:00 block and a 10:00–1
 - `total_covered_seconds(ranges)` — wall-clock seconds covered by the union.
 
 Standard library only. Tested with `PYTHONPATH=src python -m unittest discover -s tests`.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
